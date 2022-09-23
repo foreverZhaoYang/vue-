@@ -17,20 +17,17 @@ export default {
       type:Number,
       default:0
     },
-    id:{
-      type:Number,
-    }
   },
   methods: {
     add(){
       this.$refs.subRef.disabled=false;
-      bus.$emit('count-change',{id:this.id,value:this.num+1})
+      this.$emit('count-change',this.num+1)
     },
     subtract(){
       if(this.num-1===0) {
         this.$refs.subRef.disabled=true;
       }
-      bus.$emit('count-change',{id:this.id,value:this.num-1})
+      this.$emit('count-change',this.num-1)
     }
   },
 }

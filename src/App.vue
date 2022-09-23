@@ -13,7 +13,9 @@
      :state="item.goods_state"
      :count="item.goods_count"
      @state-change="getNewState"
-     ></Goods>
+     >
+      <Counter :num="item.goods_count" @count-change="getNewCount(item,$event)"></Counter>
+    </Goods>
 
      <!-- 实例化Footer组件 -->
      <Footer :checkState="fullChecked"  @state-change="getFooterStateChange" :amount="awt" :allCount="allCount"></Footer>
@@ -28,11 +30,13 @@ import Header from "@/components/Header/Header.vue";
 import Goods from '@/components/Goods/Goods.vue'
 import Footer from '@/components/Footer/Footer.vue'
 import bus from '@/components/eventBus.js'
+import Counter from '@/components/Counter/Counter.vue'
 export default {
   components: {
     Header,
     Goods,
-    Footer
+    Footer,
+    Counter
   },
   data() {
     return {
@@ -60,6 +64,9 @@ export default {
       this.list.forEach(item=>{
         item.goods_state=val;
       })
+    },
+    getNewCount(item,val){
+      item.goods_count=val
     }
   },
   computed: {
@@ -78,15 +85,15 @@ export default {
     }
   },
   created() {
-    this.toGetData(),
-    bus.$on('count-change',val=>{
-      this.list.some(item=>{
-        if(item.goods_id===val.id){
-          item.goods_count=val.value;
-          return true;
-        }
-      })
-    })
+    this.toGetData()
+    // bus.$on('count-change',val=>{
+    //   this.list.some(item=>{
+    //     if(item.goods_id===val.id){
+    //       item.goods_count=val.value;
+    //       return true;
+    //     }
+    //   })
+    // })
     
   },
 
